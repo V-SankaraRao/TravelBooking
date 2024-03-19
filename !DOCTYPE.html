@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Details</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  h2 {
+    color: #333;
+  }
+  form {
+    margin-bottom: 20px;
+    border:0px solid;
+    width:300px;
+    padding:20px;
+    text-align:center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border-radius:10px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="date"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 200px;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: blue;
+    color:white;
+    border:4px solid black;
+  }
+  .cancelBtn {
+    background-color: #f44336;
+  }
+  .cancelBtn:hover {
+    background-color: #d32f2f;
+  }
+  h2{
+    text-align:center;
+  }
+  #ff{
+    width:100%;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+</style>
+</head>
+<body>
+<h2>Booking Details</h2>
+<div id=ff>
+<form id="bookingForm">
+  <label for="bookingID">Booking ID:</label>
+  <input type="text" id="bookingID" name="bookingID" ><br>
+
+  <label for="origin">Origin:</label>
+  <input type="text" id="origin" name="origin" ><br>
+
+  <label for="destination">Destination:</label>
+  <input type="text" id="destination" name="destination" ><br>
+
+  <label for="travelDate">Travel Date:</label>
+  <input type="date" id="travelDate" name="travelDate" ><br>
+
+  <label for="carrier">Carrier:</label>
+  <input type="text" id="carrier" name="carrier" ><br>
+
+  <button type="submit">Submit</button>
+  <button type="button" id="cancelBtn">Cancel</button>
+</form>
+  </div>
+
+<h3>Current Booking Details</h3>
+<table border="1" id="bookingTable">
+  <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Travel Date</th>
+      <th>Carrier</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  
+  const bookingID = document.getElementById("bookingID").value;
+  const origin = document.getElementById("origin").value;
+  const destination = document.getElementById("destination").value;
+  const travelDate = document.getElementById("travelDate").value;
+  const carrier = document.getElementById("carrier").value;
+
+  const bookingTableBody = document.querySelector("#bookingTable tbody");
+  const newRow = bookingTableBody.insertRow();
+
+  newRow.innerHTML = `
+    <td>${bookingID}</td>
+    <td>${origin}</td>
+    <td>${destination}</td>
+    <td>${travelDate}</td>
+    <td>${carrier}</td>
+    
+  `;
+
+  // Clear the form after submission
+  document.getElementById("bookingForm").reset();
+});
+
+document.getElementById("cancelBtn").addEventListener("click", function() {
+  const bookingIDToCancel = document.getElementById("bookingID").value;
+  const rows = document.querySelectorAll("#bookingTable tbody tr");
+
+  rows.forEach(row => {
+    if (row.cells[0].textContent === bookingIDToCancel) {
+      row.remove();
+    }
+  });
+
+  // Clear the form fields after cancelling
+  document.getElementById("bookingForm").reset();
+});
+</script>
+
+</body>
+</html>
